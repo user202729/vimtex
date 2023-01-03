@@ -519,7 +519,7 @@ function! vimtex#syntax#core#init_rules() abort " {{{1
         \ 'matcher': 'start="\%#=1\z([^\ta-zA-Z]\)" end="\z1"'
         \})
 
-  syntax region texE3String start='"' end='"' containedin=texE3Group,texE3Arg,texClusterE3,texE3Zone contained
+  syntax region texE3String start='!"' end='"' containedin=texE3Group,texE3Arg,texClusterE3,texE3Zone contained
 
   " }}}2
   " {{{2 Zone: Expl3
