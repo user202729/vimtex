@@ -67,6 +67,12 @@ endfunction
 
 " }}}1
 
+function! s:is_ancestor_dir(dir, file) abort
+  let abs_dir = fnamemodify(a:dir, ':p')
+  let abs_file = fnamemodify(a:file, ':p')
+  return abs_file[:len(abs_dir)-1] == abs_dir
+endfunction
+
 function! vimtex#view#inverse_search(line, filename, column = 0) abort " {{{1
   " Only activate in VimTeX buffers
   if !exists('b:vimtex') | return -1 | endif
@@ -77,7 +83,7 @@ function! vimtex#view#inverse_search(line, filename, column = 0) abort " {{{1
   if vimtex#paths#is_abs(l:file)
     call map(l:sources, {_, x -> vimtex#paths#join(b:vimtex.root, x)})
   endif
-  if index(l:sources, l:file) < 0 | return -2 | endif
+  if index(l:sources, l:file) < 0 && !s:is_ancestor_dir(b:vimtex.root, l:file) | return -2 | endif
 
 
   if mode() ==# 'i' | stopinsert | endif
